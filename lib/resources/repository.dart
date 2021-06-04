@@ -15,4 +15,10 @@ class Repository {
   Future<Either<ErrorModel, SuccessModel>> getProfile() =>
       _apiProvider.getProfile();
 
+  Future<Either<ErrorModel, SuccessModel>> uploadPhoto({body}) =>
+      _apiProvider.uploadPhoto(body: body);
+
+  Future<Either<ErrorModel, SuccessModel>> updateForm({body}) =>
+      _apiProvider.updateForm(body: body);
+
 }

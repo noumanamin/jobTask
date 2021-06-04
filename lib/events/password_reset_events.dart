@@ -1,8 +1,7 @@
 abstract class PasswordResetEvent {}
 
 class PasswordReset extends PasswordResetEvent {
-  final Map<String, String>? body;
+  final body;
 
   PasswordReset({this.body});
-
 }

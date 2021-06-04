@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_job_task/blocs/password_reset_block.dart';
 import 'package:flutter_job_task/constants/colors.dart';
+import 'package:flutter_job_task/models/profile/data.dart';
+import 'package:flutter_job_task/models/profile_up_model.dart';
 import 'package:flutter_job_task/ui/widgets/profile_fields_widget.dart';
 
 class ProfileUpdateWidget extends StatefulWidget {
-  ProfileUpdateWidget({Key? key}) : super(key: key);
+  ProfileUpdateWidget({Key? key, this.onTickClick}) : super(key: key);
   var onTickClick;
 
   @override
@@ -22,16 +24,21 @@ class _ProfileUpdateWidgetState extends State<ProfileUpdateWidget> {
   var email = TextEditingController();
   var phone = TextEditingController();
 
-  String dataForUpdate = "";
+  String nameTxt = "";
+  String cityTxt = "";
+  String phoneTxt = "";
 
   @override
   Widget build(BuildContext context) {
     PasswordResetBloc provider = BlocProvider.of<PasswordResetBloc>(context);
-
-    name.text = name.text.isEmpty ? provider.data!.name! : name.text;
-    city.text = city.text.isEmpty ? provider.data!.city! : city.text;
-    email.text = email.text.isEmpty ? provider.data!.email! : email.text;
-    phone.text = phone.text.isEmpty ? provider.data!.phone! : phone.text;
+    provider.data = provider.data ?? Data();
+    name.text = name.text.isEmpty ? provider.data!.name ?? "" : name.text;
+    city.text = city.text.isEmpty ? provider.data!.city ?? "" : city.text;
+    email.text = email.text.isEmpty ? provider.data!.email ?? "" : email.text;
+    phone.text = phone.text.isEmpty ? provider.data!.phone ?? "" : phone.text;
+    nameTxt = name.text;
+    cityTxt = city.text;
+    phoneTxt = phone.text;
     return Column(
       children: [
         SizedBox(
@@ -42,13 +49,21 @@ class _ProfileUpdateWidgetState extends State<ProfileUpdateWidget> {
           icon: Icon(Icons.person, color: pinkColor),
           hintText: "Enter your name",
           onChange: (value) {
-            dataForUpdate = value;
+            nameTxt = value;
           },
           onTickClick: (value) {
             if (value == "true") {
               nameClick = true;
               setState(() {});
             } else {
+              if (nameTxt.isNotEmpty) {
+                Profile_up_model model = Profile_up_model();
+                model.name = nameTxt;
+                model.field = "name";
+
+                widget.onTickClick(model.toJson());
+              }
+
               nameClick = false;
               setState(() {});
             }
@@ -65,11 +80,21 @@ class _ProfileUpdateWidgetState extends State<ProfileUpdateWidget> {
           controller: city,
           icon: Icon(Icons.location_city, color: pinkColor),
           hintText: "Enter your city",
+          onChange: (value) {
+            cityTxt = value;
+          },
           onTickClick: (value) {
             if (value == "true") {
               cityClick = true;
               setState(() {});
             } else {
+              if (cityTxt.isNotEmpty) {
+                Profile_up_model model = Profile_up_model();
+                model.name = cityTxt;
+                model.field = "city";
+
+                widget.onTickClick(model.toJson());
+              }
               cityClick = false;
               setState(() {});
             }
@@ -96,11 +121,21 @@ class _ProfileUpdateWidgetState extends State<ProfileUpdateWidget> {
             color: pinkColor,
           ),
           hintText: "Enter your phone number",
+          onChange: (value) {
+            phoneTxt = value;
+          },
           onTickClick: (value) {
             if (value == "true") {
               phoneClick = true;
               setState(() {});
             } else {
+              if (phoneTxt.isNotEmpty) {
+                Profile_up_model model = Profile_up_model();
+                model.name = phoneTxt;
+                model.field = "phone";
+
+                widget.onTickClick(model.toJson());
+              }
               phoneClick = false;
               setState(() {});
             }

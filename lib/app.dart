@@ -5,10 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_job_task/blocs/password_reset_block.dart';
-import 'package:flutter_job_task/blocs/register_bloc.dart';
+import 'package:flutter_job_task/events/password_reset_events.dart';
 import 'package:flutter_job_task/routes.dart';
 import 'package:flutter_job_task/states/password_reset_state.dart';
-import 'package:flutter_job_task/states/register_state.dart';
 import 'package:flutter_job_task/ui/screens/splash_screen.dart';
 import 'package:flutter_job_task/ui/widgets/global_listener.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -71,6 +70,8 @@ class _MyAppState extends State<MyApp> {
     navigatorKey = GlobalKey<NavigatorState>();
     // TODO: implement initState
     super.initState();
+
+
   }
 
   @override
@@ -83,8 +84,6 @@ class _MyAppState extends State<MyApp> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<RegisterBloc>(
-            create: (context) => RegisterBloc(RegisterInitialState())),
         BlocProvider<PasswordResetBloc>(
             create: (context) => PasswordResetBloc(PasswordResetInitialState())),
       ],
